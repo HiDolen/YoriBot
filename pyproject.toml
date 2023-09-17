@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "YoriBot"
+version = "0.1.0"
+description = "YoriBot"
+license = "MIT"
+authors = ["HiDolen <820859278@qq.com>"]
+maintainers = [
+    "HiDolen <820859278@qq.com>",
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+nonebot2 = {extras = ["fastapi"], version = "^2.0.0"}
+nonebot-adapter-onebot = "^2.2.3"
+nonebot-plugin-imageutils = "^0.1.17"
+nonebot-plugin-apscheduler = "^0.2.0"
+ruamel-yaml = "^0.17.26"
+sqlalchemy = "^2.0.16"
+aiosqlite = "^0.19.0"
+httpx = ">=0.19.0"
+Pillow = "^9.0.0"
+
+[tool.poetry.group.dev.dependencies]
+black
+
+[virtualenvs]
+in-project = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
