@@ -82,3 +82,15 @@ TODO 超级用户插件是单独的帮助页面。通过插件信息中的分类
 ## TODO
 
 - 使用 `bot.send_group_msg` 实现定时发送，使用 `@Bot.on_calling_api` 实现定时发送的阻断
+
+## 部署（Windows）
+
+若不知道怎么部署 poetry 虚拟环境，以下步骤可供参考。
+
+首先需要安装 Python，在此不赘述。Python 版本需要大于等于 3.10。
+
+打开终端，执行 `pip install pipx`，执行 `pipx install poetry`，执行 `pipx ensurepath`。
+
+将项目 clone 到本地，在项目路径下打开终端，执行 `poetry install`，等待虚拟环境部署完成。
+
+最后执行 `poetry run bot.py`，即可启动 bot。
