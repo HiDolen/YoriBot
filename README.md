@@ -94,3 +94,5 @@ TODO 超级用户插件是单独的帮助页面。通过插件信息中的分类
 将项目 clone 到本地，在项目路径下打开终端，执行 `poetry install`，等待虚拟环境部署完成。
 
 最后执行 `poetry run bot.py`，即可启动 bot。
+
+若出现 `the greenlet library is required to use this function. DLL load failed while importing _greenlet: The specified module could not be found.` 的错误，请安装 [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170)，以保证数据库功能的正常运作。
