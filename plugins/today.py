@@ -1,9 +1,10 @@
 import random
 from datetime import date
-from nonebot.plugin import on_keyword
+from nonebot.plugin import on_keyword, on_regex
 from nonebot.adapters.onebot.v11 import Bot, Event
 from nonebot.adapters.onebot.v11.message import Message
 from nonebot.plugin import PluginMetadata
+import nonebot
 
 __plugin_meta__ = PluginMetadata(
     name="今日人品",
@@ -31,9 +32,13 @@ def luck_simple(num):
         return '末吉'
     else:
         return '凶'
-    
 
-jrrp = on_keyword(['jrrp','今日人品'],priority=50)
+command_start = nonebot.get_driver().config.command_start
+command_start = '|'.join(command_start)
+
+# jrrp = on_keyword(['jrrp','今日人品'],priority=50)
+# command_start 可有可无
+jrrp = on_regex(f'^{command_start}?(jrrp|今日人品)$', priority=50)
 
 @jrrp.handle()
 async def jrrp_handle(bot: Bot, event: Event):
