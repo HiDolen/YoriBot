@@ -27,3 +27,9 @@ black = "^22.1.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[[tool.poetry.source]]
+name = "ali"
+default = true
+url = "https://mirrors.aliyun.com/pypi/simple/"
