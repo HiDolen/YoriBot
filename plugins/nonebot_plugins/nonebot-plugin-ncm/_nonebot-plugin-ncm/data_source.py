@@ -26,17 +26,19 @@ from nonebot.adapters.onebot.v11 import (MessageSegment, Message,
 from .config import ncm_config
 from tinydb import TinyDB, Query
 
-from configs.path_config import DATA_PATH
+from configs.path_config import DATA_PATH, TEMP_PATH
 
 # ============数据库导入=============
-dbPath = Path("db")
-musicPath = Path("music")
+# dbPath = Path("db")
+dbPath = DATA_PATH / "nonebot-plugin-ncm" / "db"
+# musicPath = Path("music")
+musicPath = DATA_PATH / "nonebot-plugin-ncm" / "music"
 
 if not musicPath.is_dir():
-    musicPath.mkdir()
+    musicPath.mkdir(exist_ok=True, parents=True)
     logger.success("ncm音乐库创建成功")
 if not dbPath.is_dir():
-    dbPath.mkdir()
+    dbPath.mkdir(exist_ok=True, parents=True)
     logger.success("ncm数据库目录创建成功")
 
 data_path = DATA_PATH / "nonebot-plugin-ncm"
@@ -122,8 +124,10 @@ class Ncm:
         uuid = self.api.login.LoginQrcodeUnikey()["unikey"]
         url = f"https://music.163.com/login?codekey={uuid}"
         img = qrcode.make(url)
-        img.save('ncm.png')
-        logger.info("二维码已经保存在当前目录下的ncm.png，请使用手机网易云客户端扫码登录。")
+        # img.save('ncm.png')
+        img.save(TEMP_PATH / "ncm.png")
+        # logger.info("二维码已经保存在当前目录下的ncm.png，请使用手机网易云客户端扫码登录。")
+        logger.info(f"二维码已经保存在 {TEMP_PATH / 'ncm.png'}，请使用手机网易云客户端扫码登录。")
         while True:
             rsp = self.api.login.LoginQrcodeCheck(uuid)  # 检测扫描状态
             if rsp["code"] == 803 or rsp["code"] == 800:
@@ -247,7 +251,7 @@ class Ncm:
     @run_sync
     def get_zip(self, lid: int, filenames: list):
         zip_file_new = f'{lid}.zip'
-        with zipfile.ZipFile(str(Path.cwd().joinpath("music").joinpath(zip_file_new)), 'w', zipfile.ZIP_DEFLATED) as z:
+        with zipfile.ZipFile(str(musicPath.joinpath(zip_file_new)), 'w', zipfile.ZIP_DEFLATED) as z:
             for f in filenames:
                 z.write(str(f), f.name)
         return zip_file_new
@@ -267,7 +271,7 @@ class Ncm:
             nid = data[i]["id"]
             filename = f"{name[i]}.{data[i]['type']}"
             filename = re.sub('[\/:*?"<>|]', '-', filename)
-            file = Path.cwd().joinpath("music").joinpath(filename)
+            file = musicPath.joinpath(filename)
             config = {
                 "id": int(nid),
                 "file": str(file),  # 获取文件位置

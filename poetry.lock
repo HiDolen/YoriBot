@@ -4,7 +4,7 @@
 name = "aiofile"
 version = "3.8.8"
 description = "Asynchronous file operations."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7, <4"
 files = [
@@ -166,7 +166,7 @@ reference = "ali"
 name = "caio"
 version = "0.9.13"
 description = "Asynchronous file IO for Linux MacOS or Windows."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7, <4"
 files = [
@@ -217,7 +217,7 @@ reference = "ali"
 name = "charset-normalizer"
 version = "3.2.0"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7.0"
 files = [
@@ -1285,7 +1285,7 @@ reference = "ali"
 name = "nonebot-plugin-ncm"
 version = "1.6.6"
 description = "基于go-cqhttp与nonebot2的 网易云 无损音乐下载"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "^3.8"
 files = []
@@ -1632,7 +1632,7 @@ reference = "ali"
 name = "pyncm"
 version = "1.6.11"
 description = "NeteaseCloudMusic APIs for Python 3.x 适用于 Python 3 的网易云音乐 API"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1672,7 +1672,7 @@ reference = "ali"
 name = "pypng"
 version = "0.20220715.0"
 description = "Pure Python library for saving and loading PNG images"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 files = [
@@ -1811,7 +1811,7 @@ reference = "ali"
 name = "qrcode"
 version = "7.4.2"
 description = "QR Code image generator"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1840,7 +1840,7 @@ reference = "ali"
 name = "requests"
 version = "2.31.0"
 description = "Python HTTP for Humans."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2084,7 +2084,7 @@ reference = "ali"
 name = "tinydb"
 version = "4.8.0"
 description = "TinyDB is a tiny, document oriented database optimized for your happiness :)"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
@@ -2175,7 +2175,7 @@ reference = "ali"
 name = "urllib3"
 version = "2.0.5"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2517,4 +2517,4 @@ reference = "ali"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "2989414bfc544c24f518e119628c5c03ed4597973974a83b4d32792865851f78"
+content-hash = "9f05488e5e06aab9a36e752edf5b62f420ecec838c190536487e065936445b33"

@@ -6,7 +6,7 @@ from pydantic import BaseModel, Extra
 class Config(BaseModel, extra=Extra.ignore):
     superusers: list = []
 
-    ncm_admin_level: int = 1
+    ncm_admin_level: int = 3
     '''设置命令权限(1:仅限superusers和群主,2:在1的基础上管理员,3:所有用户)'''
 
     ncm_phone: str = ""

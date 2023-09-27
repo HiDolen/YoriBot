@@ -20,6 +20,8 @@ sqlalchemy = "^2.0.16"
 aiosqlite = "^0.19.0"
 httpx = ">=0.19.0"
 Pillow = "^9.0.0"
+
+[tool.poetry.group.nonebot.dependencies]
 nonebot-plugin-ncm = { path = "plugins/nonebot_plugins/nonebot-plugin-ncm" }
 
 [tool.poetry.group.dev.dependencies]

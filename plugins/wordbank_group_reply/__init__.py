@@ -26,8 +26,8 @@ from .data import wordbank, images
 from .utils import *
 
 __plugin_meta__ = PluginMetadata(
-    name="词库群回复 | 群词条",
-    description=r"自定义词库回复",
+    name="群词条",
+    description=r"词库群回复，自定义词库回复",
     usage="""
     添加词条 模糊 问...答...（关键词触发）
     添加词条 问...答...（全匹配触发）

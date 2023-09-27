@@ -49,15 +49,15 @@ async def song_is_open(event: Union[GroupMessageEvent, PrivateMessageEvent]) -> 
         if info:
             return info[0]["song"]
         else:
-            setting.insert({"group_id": event.group_id, "song": False, "list": False})
-            return False
+            setting.insert({"group_id": event.group_id, "song": True, "list": False})
+            return True
     elif isinstance(event, PrivateMessageEvent):
         info = setting.search(Q["user_id"] == event.user_id)
         if info:
             return info[0]["song"]
         else:
-            setting.insert({"user_id": event.user_id, "song": True, "list": True})
-            return True
+            setting.insert({"user_id": event.user_id, "song": False, "list": False})
+            return False
 
 
 async def playlist_is_open(event: Union[GroupMessageEvent, PrivateMessageEvent]) -> bool:
@@ -66,15 +66,15 @@ async def playlist_is_open(event: Union[GroupMessageEvent, PrivateMessageEvent])
         if info:
             return info[0]["list"]
         else:
-            setting.insert({"group_id": event.group_id, "song": False, "list": False})
+            setting.insert({"group_id": event.group_id, "song": True, "list": False})
             return False
     elif isinstance(event, PrivateMessageEvent):
         info = setting.search(Q["user_id"] == event.user_id)
         if info:
             return info[0]["list"]
         else:
-            setting.insert({"user_id": event.user_id, "song": True, "list": True})
-            return True
+            setting.insert({"user_id": event.user_id, "song": False, "list": False})
+            return False
 
 
 async def check_search() -> bool:
