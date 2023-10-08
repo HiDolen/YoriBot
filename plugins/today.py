@@ -38,7 +38,7 @@ command_start = '|'.join(command_start)
 
 # jrrp = on_keyword(['jrrp','今日人品'],priority=50)
 # command_start 可有可无
-jrrp = on_regex(f'^{command_start}?(jrrp|今日人品)$', priority=50)
+jrrp = on_regex(f'^({command_start})?(jrrp|今日人品)$', priority=50)
 
 @jrrp.handle()
 async def jrrp_handle(bot: Bot, event: Event):

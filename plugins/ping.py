@@ -19,7 +19,7 @@ __plugin_meta__ = PluginMetadata(
 command_start = nonebot.get_driver().config.command_start
 command_start = '|'.join(command_start)
 
-ping = on_regex(f'^{command_start}?(ping)$', priority=50)
+ping = on_regex(f'^({command_start})?(ping)$', priority=50)
 
 @ping.handle()
 async def ping_handle(bot: Bot, event: Event):
