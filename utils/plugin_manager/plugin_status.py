@@ -121,7 +121,36 @@ class PluginStatus(StaticDataIO):
         """
         self._init_group(group_id)
         return plugin in self.data["group_plugin_status"][group_id]["privilege_plugins"]
+    
+    def erase_plugin(self, plugin: str):
+        """
+        description:
+            抹除一个插件的存在。在插清理插件信息时使用
+        params:
+            :param plugin: 插件
+        """
+        if plugin in self.data["global_closed_plugins"]:
+            self.data["global_closed_plugins"].remove(plugin)
+        for group_id in self.data["group_plugin_status"].keys():
+            if plugin in self.data["group_plugin_status"][group_id]["closed_plugins"]:
+                self.data["group_plugin_status"][group_id]["closed_plugins"].remove(plugin)
+            if plugin in self.data["group_plugin_status"][group_id]["privilege_plugins"]:
+                self.data["group_plugin_status"][group_id]["privilege_plugins"].remove(plugin)
+        if plugin in self.data["private_closed_plugins"]:
+            self.data["private_closed_plugins"].remove(plugin)
+        self.save()
 
+    def erase_group(self, group_id: str):
+        """
+        description:
+            抹除一个群的存在。在清理群插件状态时使用
+        params:
+            :param group_id: 群号
+        """
+        if group_id in self.data["group_plugin_status"].keys():
+            self.data["group_plugin_status"].pop(group_id)
+            self.save()
+    
     def _init_group(self, group_id: str):
         """
         description:
