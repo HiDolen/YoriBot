@@ -125,7 +125,7 @@ class PluginStatus(StaticDataIO):
     def _init_group(self, group_id: str):
         """
         description:
-            初始化群插件数据
+            初始化群插件数据。仅新建群数据，不包括初始化插件的开关状态
         params:
             :param group_id: 群号
         """

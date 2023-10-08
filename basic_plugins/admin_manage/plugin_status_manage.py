@@ -25,7 +25,7 @@ async def is_group_admin(bot: Bot, event: Event):
     return False
 
 activate_plugin_in_group = on_command("启用",
-                                      aliases={"打开", "开启", "启用插件", "打开插件", "开启插件"},
+                                      aliases={"打开", "开启", "添加插件", "启用插件", "打开插件", "开启插件"},
                                       permission=is_group_admin,
                                       priority=2,
                                       block=True)

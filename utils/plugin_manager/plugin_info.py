@@ -45,7 +45,7 @@ class PluginInfo(StaticDataIO):
     def get_default_off_plugins(self):
         """
         description:
-            获取默认关闭的插件。只返回 default_status 为 False 的插件
+            获取默认关闭的插件。即只返回 default_status 为 False 的插件
         """
         return [plugin for plugin in self.data.keys()
                 if not self.data[plugin]["default_status"]]

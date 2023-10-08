@@ -35,6 +35,15 @@ class GroupInfo(StaticDataIO):
             }
             self.save()
 
+    def remove_group(self, group_id: str):
+        """
+        description:
+            移除群
+        """
+        if group_id in self.data:
+            del self.data[str(group_id)]
+            self.save()
+
     def group_exist(self, group_id: str):
         return str(group_id) in self.data
 
