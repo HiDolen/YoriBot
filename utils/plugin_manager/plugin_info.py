@@ -72,12 +72,6 @@ class PluginInfo(StaticDataIO):
             :param default_status: 未设置群插件状态时，默认状态（针对新入群）
             :param kwargs: 其他参数
         """
-        # 去除 usage 开头与结尾的空行
-        usage = usage.strip()
-        while usage.startswith("\n"):
-            usage = usage[1:]
-        while usage.endswith("\n"):
-            usage = usage[:-1]
         self.data[plugin] = {
             "plugin_name": plugin_name,
             "description": description,

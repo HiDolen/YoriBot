@@ -23,10 +23,20 @@ async def _():
             try:
                 metadata = plugin.metadata
                 metadata_extra = plugin.metadata.extra
+
+                if metadata.usage == None:
+                    usage = None
+                else:
+                    # 去除 usage 开头与结尾的空行
+                    usage = metadata.usage.strip()
+                    while usage.startswith("\n"):
+                        usage = usage[1:]
+                    while usage.endswith("\n"):
+                        usage = usage[:-1]
                 info = {
                     "plugin_name": metadata.name if metadata.name else None,
                     "description": metadata.description if metadata.description else None,
-                    "usage": metadata.usage if metadata.usage else None,
+                    "usage": usage,
                     "default_status": metadata_extra["default_status"] if "default_status" in metadata_extra else True,
                 }
                 if plugin_manager.plugin_info.info_is_different(name, info):
