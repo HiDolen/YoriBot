@@ -40,6 +40,8 @@ if not musicPath.is_dir():
 if not dbPath.is_dir():
     dbPath.mkdir(exist_ok=True, parents=True)
     logger.success("ncm数据库目录创建成功")
+if not TEMP_PATH.is_dir():
+    TEMP_PATH.mkdir(exist_ok=True, parents=True)
 
 data_path = DATA_PATH / "nonebot-plugin-ncm"
 # music = TinyDB("./db/ncm_musics.json")

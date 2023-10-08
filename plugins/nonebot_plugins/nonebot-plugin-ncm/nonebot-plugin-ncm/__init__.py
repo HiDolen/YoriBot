@@ -127,7 +127,7 @@ search = on_command("点歌",
                     priority=2, block=False)
 '''点歌'''
 
-login = on_command(f'ncm登陆', priority=2, block=True, permission=SUPERUSER)
+login = on_command(f'ncm登陆', aliases={'ncm登录'}, priority=2, block=True, permission=SUPERUSER)
 
 
 @search.handle()
