@@ -7,6 +7,25 @@ from utils.global_objects import plugin_manager
 from utils.plugin_manager.plugin_status import PluginStatus
 from nonebot import Bot
 from utils.utils import get_group_name
+from nonebot.plugin import PluginMetadata
+
+__plugin_meta__ = PluginMetadata(
+    name="群权限管理",
+    description="管理群权限、群认证",
+    usage="""
+添加群认证
+添加群认证 123456666
+
+移除群认证
+移除群认证 123456666
+
+设置群权限 2
+设置群权限 123456666 2
+""",
+    type="admin",
+)
+
+__force_to_operate__ = True
 
 add_group = on_command("添加群权限", aliases={"添加群认证", "添加群"}, permission=SUPERUSER, priority=5, block=True)
 remove_group = on_command("移除群权限", aliases={"移除群认证", "移除群", "删除群权限", "删除群认证", "删除群"}, permission=SUPERUSER, priority=5, block=True)
