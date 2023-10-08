@@ -46,6 +46,9 @@ class GroupInfo(StaticDataIO):
 
     def group_exist(self, group_id: str):
         return str(group_id) in self.data
+    
+    def get_all_group(self):
+        return self.data.keys()
 
     def get_group_permission(self, group_id: str):
         """
