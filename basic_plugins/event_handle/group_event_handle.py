@@ -6,7 +6,7 @@ from utils.global_objects import group_manager
 from utils.global_logger import logger
 from utils.utils import get_user_name, get_group_name
 
-# 被拉入群自动退群、被踢出群进行报告
+# bot 被拉入群自动退群、bot 被踢出群进行报告
 
 __force_to_operate__ = True
 
