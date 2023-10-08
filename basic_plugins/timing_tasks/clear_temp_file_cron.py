@@ -5,7 +5,7 @@ from datetime import datetime
 import os
 
 @scheduler.scheduled_job("cron", hour="1, 13", minute=1, second=0)
-async def clear_temp_cron():
+async def clear_temp_file_cron():
     # 清理时间超过 1 天的临时文件
     logger.info("定时清理临时文件……")
     count = 0
