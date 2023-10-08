@@ -20,6 +20,10 @@ from .data_source import nncm, ncm_config, setting, Q, cmd
 from .config import Config
 from nonebot.plugin import PluginMetadata
 
+from .data_source import user_is_loaded
+from nonebot.permission import SUPERUSER
+import re
+
 __plugin_meta__ = PluginMetadata(
     name="网易云下载",
     description="基于go-cqhttp与nonebot2的 网易云无损音乐下载",
@@ -92,11 +96,18 @@ async def music_set_rule(event: Union[GroupMessageEvent, PrivateMessageEvent]) -
 
 
 async def music_reply_rule(event: Union[GroupMessageEvent, PrivateMessageEvent]):
+    if not user_is_loaded:
+        return False
     # logger.info(event.get_plaintext())
-    return event.reply and event.get_plaintext().strip() == "下载"
+    
+    is_ok = re.findall(f"^({command_start})?下载", event.get_plaintext().strip())
+    return event.reply and is_ok
 
 
 # ============Matcher=============
+command_start = nonebot.get_driver().config.command_start
+command_start = '|'.join(command_start)
+
 ncm_set = on_command("ncm",
                      rule=Rule(music_set_rule),
                      priority=1, block=False)
@@ -115,6 +126,8 @@ search = on_command("点歌",
                     rule=Rule(check_search),
                     priority=2, block=False)
 '''点歌'''
+
+login = on_command(f'ncm登陆', priority=2, block=True, permission=SUPERUSER)
 
 
 @search.handle()
@@ -166,10 +179,13 @@ async def music_reply_receive(bot: Bot, event: Union[GroupMessageEvent, PrivateM
         if isinstance(data, list):
             data = data[0]
         if data:
+            # 转换 data['file'] 为绝对路径
+            data['file'] = str(Path.cwd().joinpath(data['file']))
             if isinstance(event, GroupMessageEvent):
                 await nncm.upload_group_data_file(event.group_id, data, bot_id=info["bot_id"])
             elif isinstance(event, PrivateMessageEvent):
                 await nncm.upload_private_data_file(event.user_id, data, bot_id=info["bot_id"])
+            await music_reply.send("上传完成，请查看群文件")
         else:
             logger.error("数据库中未有该音乐地址数据")
             await bot.send(event=event, message="数据库中未有该音乐地址数据")
@@ -298,3 +314,28 @@ async def set_receive(bot: Bot, event: Union[GroupMessageEvent, PrivateMessageEv
         msg = f"{cmd}ncm:获取命令菜单\r\n说明:网易云歌曲分享到群内后回复机器人即可下载\r\n" \
               f"{cmd}ncm t:开启解析\r\n{cmd}ncm f:关闭解析\n{cmd}点歌 歌名:点歌"
         return await ncm_set.finish(message=MessageSegment.text(msg))
+
+is_logging = False    
+
+
+@login.handle()
+async def _(bot: Bot, event: Union[GroupMessageEvent, PrivateMessageEvent]):
+    global is_logging
+    global user_is_loaded
+    if is_logging:
+        await login.finish("请先完成上一次登录")
+        return
+    is_logging = True
+
+    if ncm_config.ncm_phone == "":
+        logger.warning("您未填写账号,自动进入二维码登录模式")
+        nncm.get_qrcode()
+        user_is_loaded = True
+    elif ncm_config.ncm_password == "":
+        logger.warning("您未填写密码,自动进入手机验证码登录模式")
+        nncm.get_phone_login()
+        user_is_loaded = True
+    else:
+        nncm.login()
+    
+    is_logging = False

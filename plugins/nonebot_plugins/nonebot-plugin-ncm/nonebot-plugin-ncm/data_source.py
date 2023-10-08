@@ -295,6 +295,8 @@ class Ncm:
         if is_zip:
             await self.get_zip(lid=lid, filenames=filenames)
         return not_zips
+    
+user_is_loaded = False
 
 
 nncm = Ncm()
@@ -303,11 +305,12 @@ if info:
     logger.info("检测到缓存，自动加载用户")
     nncm.load_user(info[0]['session'])
     nncm.get_user_info()
-elif ncm_config.ncm_phone == "":
-    logger.warning("您未填写账号,自动进入二维码登录模式")
-    nncm.get_qrcode()
-elif ncm_config.ncm_password == "":
-    logger.warning("您未填写密码,自动进入手机验证码登录模式")
-    nncm.get_phone_login()
-else:
-    nncm.login()
+    user_is_loaded = True
+# elif ncm_config.ncm_phone == "":
+#     logger.warning("您未填写账号,自动进入二维码登录模式")
+#     nncm.get_qrcode()
+# elif ncm_config.ncm_password == "":
+#     logger.warning("您未填写密码,自动进入手机验证码登录模式")
+#     nncm.get_phone_login()
+# else:
+#     nncm.login()
