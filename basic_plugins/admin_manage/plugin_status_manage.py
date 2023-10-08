@@ -6,6 +6,30 @@ from utils.global_objects import plugin_manager as pm
 from utils.global_objects import group_manager as gm
 from utils.plugin_manager.plugin_status import PluginStatus
 from nonebot.adapters import Event
+from nonebot.plugin import PluginMetadata
+
+__plugin_meta__ = PluginMetadata(
+    name="插件管理",
+    description="管理群插件开关、全局插件开关、特权插件等。全局禁用优先级最高。将插件添加到特权插件列表后，拥有群认证的群（群权限为 2 或以上）的管理员可以自由开关该插件。",
+    usage="""
+开启插件 今日人品
+开启插件 今日人品 123456666
+
+关闭插件 今日人品
+关闭插件 今日人品 123456666
+
+全局开启插件 今日人品
+全局关闭插件 今日人品
+
+（以下指令仅超级用户可用）
+
+添加特权插件 今日人品
+移除特权插件 今日人品
+""",
+    type="admin",
+)
+
+__force_to_operate__ = True
 
 
 async def is_group_admin(bot: Bot, event: Event):
@@ -70,9 +94,8 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
             is_privilege = pm.plugin_status.is_privilege_plugin(
                 plugin, str(event.group_id))
             if isinstance(event, GroupMessageEvent):
-                if not is_privilege and not is_super_user:
-                    if not group_permission >= 3:
-                        await activate_plugin_in_group.finish(f"参数错误")
+                if not is_privilege and not is_super_user and group_permission <= 2:
+                    await activate_plugin_in_group.finish(f"参数错误")
                 elif is_privilege or group_permission >= 3:
                     await activate_plugin_in_group.send(f"插件 {arg} 已启用")
                 else:  # 不是特权插件，但超级用户
