@@ -87,8 +87,10 @@ remove_privilege_plugin = on_command("移除特权插件",
 @activate_plugin_in_group.handle()
 async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     arg = arg.extract_plain_text()
-    group_permission = gm.group_info.get_group_permission(str(event.group_id))
+    # group_permission = gm.group_info.get_group_permission(str(event.group_id))
     if isinstance(event, GroupMessageEvent):
+        group_permission = gm.group_info.get_group_permission(str(event.group_id))
+
         if plugin := pm.plugin_info.get_plugin_from_name(arg):
             is_super_user = event.get_user_id() in bot.config.superusers
             is_privilege = pm.plugin_status.is_privilege_plugin(
@@ -106,6 +108,8 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
     else:
         try:
             plugin_name, group_id = arg.split()
+            group_permission = gm.group_info.get_group_permission(group_id)
+            
             if plugin := pm.plugin_info.get_plugin_from_name(plugin_name):
                 is_super_user = event.get_user_id() in bot.config.superusers
                 is_privilege = pm.plugin_status.is_privilege_plugin(
