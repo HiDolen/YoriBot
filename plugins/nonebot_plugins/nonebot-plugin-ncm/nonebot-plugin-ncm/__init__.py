@@ -96,8 +96,6 @@ async def music_set_rule(event: Union[GroupMessageEvent, PrivateMessageEvent]) -
 
 
 async def music_reply_rule(event: Union[GroupMessageEvent, PrivateMessageEvent]):
-    if not user_is_loaded:
-        return False
     # logger.info(event.get_plaintext())
     
     is_ok = re.findall(f"^({command_start})?下载", event.get_plaintext().strip())
@@ -170,6 +168,9 @@ async def music_list_receive(bot: Bot, event: Union[GroupMessageEvent, PrivateMe
 
 @music_reply.handle()
 async def music_reply_receive(bot: Bot, event: Union[GroupMessageEvent, PrivateMessageEvent]):
+    if not user_is_loaded:
+        music_reply.finish("请先使用命令 “ncm登录” 在后台登录账号")
+
     info = nncm.check_message(int(event.dict()["reply"]["message_id"]))
     if info is None:
         return
