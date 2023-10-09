@@ -5,6 +5,7 @@ from nonebot.permission import SUPERUSER
 from utils.global_objects import plugin_manager as pm
 from utils.global_objects import group_manager as gm
 from utils.plugin_manager.plugin_status import PluginStatus
+from utils.utils import get_group_name
 from nonebot.adapters import Event
 from nonebot.plugin import PluginMetadata
 
@@ -109,21 +110,21 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
         try:
             plugin_name, group_id = arg.split()
             group_permission = gm.group_info.get_group_permission(group_id)
-            
+
             if plugin := pm.plugin_info.get_plugin_from_name(plugin_name):
                 is_super_user = event.get_user_id() in bot.config.superusers
                 is_privilege = pm.plugin_status.is_privilege_plugin(
-                    plugin, str(event.group_id))
-                group_name = await bot.get_group_info(group_id=group_id)['group_name']
+                    plugin, group_id)
+                group_name = await get_group_name(bot, group_id)
                 if not is_super_user:
                     await activate_plugin_in_group.finish(f"参数错误")
                 if not is_privilege and group_permission <= 2:
                     pm.plugin_status.add_privilege_plugin(plugin, group_id)
                     await activate_plugin_in_group.send(
-                        f"插件 {arg} 已在群 {group_name}({group_id}) 启用，并且添加到特权插件列表")
+                        f"插件 {plugin_name} 已在群 {group_name}({group_id}) 启用，并且添加到特权插件列表")
                 else:
                     await activate_plugin_in_group.send(
-                        f"插件 {arg} 已在群 {group_name}({group_id})")
+                        f"插件 {plugin_name} 已在群 {group_name}({group_id})")
                 pm.plugin_status.set_plugin_status(
                     plugin, True, group_id)
         except:
@@ -144,9 +145,9 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
             if plugin := pm.plugin_info.get_plugin_from_name(plugin_name):
                 pm.plugin_status.set_plugin_status(
                     plugin, False, group_id)
-                group_name = await bot.get_group_info(group_id=group_id)['group_name']
+                group_name = await get_group_name(bot, group_id)
                 await deactivate_plugin_in_group.finish(
-                    f"插件 {arg} 已在群 {group_name}(id:{group_id}) 禁用")
+                    f"插件 {plugin_name} 已在群 {group_name}({group_id}) 禁用")
         except:
             await deactivate_plugin_in_group.finish("参数错误")
 
@@ -176,15 +177,15 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
         if isinstance(event, GroupMessageEvent):
             pm.plugin_status.add_privilege_plugin(plugin, str(event.group_id))
             await add_privilege_plugin.finish(f"插件 {arg} 已添加到群的特权插件列表")
-        else:
-            try:
-                plugin_name, group_id = arg.split()
-                pm.plugin_status.add_privilege_plugin(plugin, group_id)
-                group_name = await bot.get_group_info(group_id=group_id)['group_name']
-                await add_privilege_plugin.finish(
-                    f"插件 {arg} 已添加到群 {group_name}({group_id}) 的特权插件列表")
-            except:
-                await add_privilege_plugin.finish("参数错误")
+    else:
+        try:
+            plugin_name, group_id = arg.split()
+            plugin = pm.plugin_info.get_plugin_from_name(plugin_name)
+            pm.plugin_status.add_privilege_plugin(plugin, group_id)
+            group_name = await get_group_name(bot, group_id)
+        except:
+            await add_privilege_plugin.finish("参数错误")
+        await add_privilege_plugin.finish(f"插件 {plugin_name} 已添加到群 {group_name}({group_id}) 的特权插件列表")
 
 
 @remove_privilege_plugin.handle()
@@ -196,12 +197,12 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
         if isinstance(event, GroupMessageEvent):
             pm.plugin_status.remove_privilege_plugin(plugin, str(event.group_id))
             await remove_privilege_plugin.finish(f"插件 {arg} 已从群的特权插件列表移除")
-        else:
-            try:
-                plugin_name, group_id = arg.split()
-                pm.plugin_status.remove_privilege_plugin(plugin, group_id)
-                group_name = await bot.get_group_info(group_id=group_id)['group_name']
-                await remove_privilege_plugin.finish(
-                    f"插件 {arg} 已从群 {group_name}({group_id}) 的特权插件列表移除")
-            except:
-                await remove_privilege_plugin.finish("参数错误")
+    else:
+        try:
+            plugin_name, group_id = arg.split()
+            plugin = pm.plugin_info.get_plugin_from_name(plugin_name)
+            pm.plugin_status.remove_privilege_plugin(plugin, group_id)
+            group_name = await get_group_name(bot, group_id)
+        except:
+            await remove_privilege_plugin.finish("参数错误")
+        await remove_privilege_plugin.finish(f"插件 {plugin_name} 已从群 {group_name}({group_id}) 的特权插件列表移除")
