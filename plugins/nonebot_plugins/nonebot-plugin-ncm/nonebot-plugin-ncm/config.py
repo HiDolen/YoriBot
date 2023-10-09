@@ -20,7 +20,7 @@ class Config(BaseModel, extra=Extra.ignore):
 
     ncm_playlist_zip: bool = False
     '''上传歌单时是否压缩'''
-    ncm_bitrate: int = 320
+    ncm_bitrate: int = 640
     '''下载码率(单位K) 96及以下为m4a,320及以上为flac,中间mp3'''
 
 
