@@ -69,6 +69,18 @@ class PluginStatus(StaticDataIO):
                     self.data["global_closed_plugins"].append(plugin)
         self.save()
 
+    def set_plugin_off_for_existing_groups(self, plugin: str):
+        """
+        description:
+            针对新插件。设置已有群的插件状态都为关闭
+        params:
+            :param plugin: 插件
+        """
+        for group_id in self.data["group_plugin_status"].keys():
+            if plugin not in self.data["group_plugin_status"][group_id]["closed_plugins"]:
+                self.data["group_plugin_status"][group_id]["closed_plugins"].append(plugin)
+        self.save()
+
     def set_plugin_status_private(self, plugin: str, status: bool):
         """
         description:
