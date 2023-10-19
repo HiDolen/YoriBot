@@ -23,7 +23,6 @@ async def get_group_member_name(bot:Bot, group_id:str, user_id:str) -> str:
     except:
         return None
 
-# 返回类型为 list，元素为 matcher
 def get_matchers(distinct: bool = False) -> List[Matcher]:
     """
     description:
@@ -40,3 +39,17 @@ def get_matchers(distinct: bool = False) -> List[Matcher]:
             matchers_list.append(matcher)
             temp_names.append(matcher.plugin_name)
     return matchers_list
+
+def trim_docstring(docstring: str) -> str:
+    """
+    description:
+        去除 docstring 开头与结尾的空行、空格
+    params:
+        :param docstring: docstring
+    """
+    docstring = docstring.strip()
+    while docstring.startswith("\n"):
+        docstring = docstring[1:]
+    while docstring.endswith("\n"):
+        docstring = docstring[:-1]
+    return docstring

@@ -2,6 +2,7 @@ import nonebot
 from nonebot import Driver
 from utils.global_objects import plugin_manager
 from utils.global_logger import logger
+from utils.utils import trim_docstring
 from nonebot.matcher import Matcher, matchers
 
 driver: Driver = nonebot.get_driver()
@@ -28,11 +29,7 @@ async def _():
                     usage = None
                 else:
                     # 去除 usage 开头与结尾的空行
-                    usage = metadata.usage.strip()
-                    while usage.startswith("\n"):
-                        usage = usage[1:]
-                    while usage.endswith("\n"):
-                        usage = usage[:-1]
+                    usage = trim_docstring(metadata.usage)
                 info = {
                     "plugin_name": metadata.name if metadata.name else None,
                     "description": metadata.description if metadata.description else None,
