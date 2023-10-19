@@ -27,8 +27,8 @@ __plugin_meta__ = PluginMetadata(
 
 __force_to_operate__ = True
 
-add_group = on_command("添加群权限", aliases={"添加群认证", "添加群"}, permission=SUPERUSER, priority=5, block=True)
-remove_group = on_command("移除群权限", aliases={"移除群认证", "移除群", "删除群权限", "删除群认证", "删除群"}, permission=SUPERUSER, priority=5, block=True)
+add_group = on_command("添加群权限", aliases={"添加群认证"}, permission=SUPERUSER, priority=5, block=True)
+remove_group = on_command("移除群权限", aliases={"移除群认证", "删除群权限", "删除群认证"}, permission=SUPERUSER, priority=5, block=True)
 set_group_permission = on_command("设置群权限", permission=SUPERUSER, priority=5, block=True)
 
 
