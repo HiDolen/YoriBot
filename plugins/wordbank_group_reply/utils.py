@@ -64,6 +64,8 @@ def message2value(msg: Message):
             value += f"[CQ:image,file=file:///{(image_dir / filename).resolve()}]"
         elif m.type == "json":
             return None
+        elif m.type == "reply":
+            continue     
         else:
             raise ValueError(f"不支持的消息类型：{m.type}")
     return value.strip()
