@@ -36,7 +36,7 @@ async def _():
                     "usage": usage,
                     "default_status": metadata_extra["default_status"] if "default_status" in metadata_extra else True,
                 }
-                if not plugin_manager.plugin_info.plugin_is_exist(name): # 如果是新插件插件
+                if not plugin_manager.plugin_info.plugin_exist(name): # 如果是新插件插件
                     logger.info(f"发现新插件 `{plugin.metadata.name}({name})`")
                     if info["default_status"] == False: # 针对默认关闭的插件，为所有群关闭插件
                         logger.info(f"新插件 `{plugin.metadata.name}({name})` 为默认关闭，为所有群关闭插件")
