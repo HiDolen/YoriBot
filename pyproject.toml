@@ -3,9 +3,9 @@ name = "YoriBot"
 version = "0.1.0"
 description = "YoriBot"
 license = "MIT"
-authors = ["HiDolen <820859278@qq.com>"]
+authors = ["HiDolen <you@example.com>"]
 maintainers = [
-    "HiDolen <820859278@qq.com>",
+    "HiDolen <you@example.com>",
 ]
 readme = "README.md"
 
